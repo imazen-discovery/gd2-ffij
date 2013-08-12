@@ -28,30 +28,33 @@ require 'gd2/version'
 module GD2
   module GD2FFI
     def self.gd_library_name
-      return @gd_library_name if defined?(@gd_library_name)
+      # We hard-code to the version of libgd that we just built.  Hack alert!
+      return '/usr/local/lib/libgd.so.3'
 
-      @gd_library_name = if RbConfig::CONFIG['host_os'] == 'cygwin'
-        'cyggd-2.dll'
-      else
-        paths = if ENV['GD2_LIBRARY_PATH']
-          [ ENV['GD2_LIBRARY_PATH'] ]
-        else
-          [ '/usr/local/{lib64,lib}', '/opt/local/{lib64,lib}', '/usr/{lib64,lib}', '/usr/lib/{x86_64,i386}-linux-gnu' ]
-        end
+      # return @gd_library_name if defined?(@gd_library_name)
 
-        lib = if [
-          RbConfig::CONFIG['arch'],
-          RbConfig::CONFIG['host_os']
-        ].detect { |c| c =~ /darwin/ }
-          'libgd.2.dylib'
-        else
-          'libgd.so.2'
-        end
+      # @gd_library_name = if RbConfig::CONFIG['host_os'] == 'cygwin'
+      #   'cyggd-2.dll'
+      # else
+      #   paths = if ENV['GD2_LIBRARY_PATH']
+      #     [ ENV['GD2_LIBRARY_PATH'] ]
+      #   else
+      #     [ '/usr/local/{lib64,lib}', '/opt/local/{lib64,lib}', '/usr/{lib64,lib}', '/usr/lib/{x86_64,i386}-linux-gnu' ]
+      #   end
 
-        Dir.glob(paths.collect { |path|
-          "#{path}/#{lib}"
-        }).first
-      end
+      #   lib = if [
+      #     RbConfig::CONFIG['arch'],
+      #     RbConfig::CONFIG['host_os']
+      #   ].detect { |c| c =~ /darwin/ }
+      #     'libgd.2.dylib'
+      #   else
+      #     'libgd.so.2'
+      #   end
+
+      #   Dir.glob(paths.collect { |path|
+      #     "#{path}/#{lib}"
+      #   }).first
+      # end
     end
 
     extend FFI::Library
@@ -134,6 +137,9 @@ module GD2
       :gdImageCopyResized                 => [ :void,     :pointer, :pointer, :int, :int, :int, :int, :int, :int, :int, :int ],
       :gdImageCopyResampled               => [ :void,     :pointer, :pointer, :int, :int, :int, :int, :int, :int, :int, :int ],
       :gdImageCopyRotated                 => [ :void,     :pointer, :pointer, :double, :double, :int, :int, :int, :int, :int ],
+#      :gdImageRotate90                    => [ :pointer,  :pointer, :int],
+#      :gdImageRotate180                   => [ :pointer,  :pointer, :int],
+#      :gdImageRotate270                   => [ :pointer,  :pointer, :int],
       :gdImageCopyMerge                   => [ :void,     :pointer, :pointer, :int, :int, :int, :int, :int, :int, :int ],
       :gdImageCopyMergeGray               => [ :void,     :pointer, :pointer, :int, :int, :int, :int, :int, :int, :int ],
       :gdImageSquareToCircle              => [ :pointer,  :pointer, :int ],
