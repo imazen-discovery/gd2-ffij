@@ -643,6 +643,32 @@ module GD2
       clone.resize!(w, h, resample)
     end
 
+
+    # Resize this image to the given dimensions using the selected
+    # interpolation method.
+
+    # def resizeInterpolated!(w, h)
+    #   ptr = self.class.create_image_ptr(w, h, false)
+    #   ::GD2::GD2FFI.send(:gdImageScale, XXXX )
+
+    #   alpha_blending = alpha_blending?
+    #   init_with_image(ptr)
+    #   self.alpha_blending = alpha_blending
+    #   self
+    # end
+
+    # Set the interpolation method.  Invalid values are ignored.  The
+    # result of the expression is the actual interpolation method.
+    def interpolation_method=(method)
+      ::GD2::GD2FFI.gdImageSetInterpolationMethod(image_ptr, method)
+      return ::GD2::GD2FFI.gdImageGetInterpolationMethod(image_ptr)
+    end
+
+    def interpolation_method
+      return ::GD2::GD2FFI.gdImageGetInterpolationMethod(image_ptr)
+    end
+
+
     # Transform this image into a new image of width and height +radius+ × 2,
     # in which the X axis of the original has been remapped to θ (angle) and
     # the Y axis of the original has been remapped to ρ (distance from center).

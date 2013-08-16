@@ -1,6 +1,11 @@
 
 = gd2-ffij - Ruby FFI Bindings for Thomas Boutell's gd 2.x Graphics Library
 
+__WARNING:__ This version has been hacked up to work with the precise
+build of LibGD used by the `grlibs-stopwatch`.  The original version
+of this is at http://github.com/dark-panda/gd2-ffij ; you probably
+that instead.
+
 Original dl-based code copyright (C) 2005-2006 Robert Leslie <rob@mars.org>
 
 FFI modifications copyright (C) 2010-2012 J Smith <dark.panda@gmail.com>
