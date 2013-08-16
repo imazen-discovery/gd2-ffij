@@ -213,7 +213,6 @@ module GD2
     def self.image_true_color?(ptr)
       not ptr[:trueColor].zero?
     end
-    private_class_method :image_true_color?
 
     def self.create_image_ptr(sx, sy, alpha_blending = true)  #:nodoc:
       ptr = FFIStruct::ImagePtr.new(::GD2::GD2FFI.send(create_image_sym, sx.to_i, sy.to_i))
@@ -644,18 +643,18 @@ module GD2
     end
 
 
-    # Resize this image to the given dimensions using the selected
-    # interpolation method.
+    # Resize this image to dimensions +w+ by +h+ using the selected
+    # interpolation method (set via +interpolation_method+).  This is
+    # similar to resize(!) but is a different implementation.
+    def resizeInterpolated(w, h)
+      ptr = ::GD2::GD2FFI.gdImageScale(image_ptr, w, h)
+      raise "gdImageScale failed." unless ptr
 
-    # def resizeInterpolated!(w, h)
-    #   ptr = self.class.create_image_ptr(w, h, false)
-    #   ::GD2::GD2FFI.send(:gdImageScale, XXXX )
+      ptr = FFIStruct::ImagePtr.new(ptr)
 
-    #   alpha_blending = alpha_blending?
-    #   init_with_image(ptr)
-    #   self.alpha_blending = alpha_blending
-    #   self
-    # end
+      klass = self.class.image_true_color?(ptr) ? TrueColor : IndexedColor
+      return klass.allocate.init_with_image(ptr)
+    end
 
     # Set the interpolation method.  Invalid values are ignored.  The
     # result of the expression is the actual interpolation method.
