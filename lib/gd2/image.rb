@@ -713,6 +713,17 @@ module GD2
 
       obj
     end
+
+    # Apply a gaussian blur to the image
+    def gaussian_blur!()
+      status = ::GD2::GD2FFI.gdImageGaussianBlur image_ptr
+      raise LibraryError unless status != 0
+      return self
+    end
+
+    def gaussian_blur()
+      self.clone.gaussian_blur!
+    end
   end
 
   #
