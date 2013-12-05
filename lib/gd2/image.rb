@@ -667,6 +667,15 @@ module GD2
       return ::GD2::GD2FFI.gdImageGetInterpolationMethod(image_ptr)
     end
 
+    def blurred(radius)
+      ptr = ::GD2::GD2FFI.gdImageCopyGaussianBlurred(image_ptr, radius)
+      raise "gdImageCopyGaussianBlurred failed." unless ptr
+
+      ptr = FFIStruct::ImagePtr.new(ptr)
+
+      klass = self.class.image_true_color?(ptr) ? TrueColor : IndexedColor
+      return klass.allocate.init_with_image(ptr)
+    end
 
     # Transform this image into a new image of width and height +radius+ × 2,
     # in which the X axis of the original has been remapped to θ (angle) and

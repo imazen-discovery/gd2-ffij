@@ -145,8 +145,12 @@ module GD2
       :gdImageCharUp                      => [ :void,     :pointer, :pointer, :int, :int, :int, :int ],
       :gdImageString                      => [ :void,     :pointer, :pointer, :int, :int, :pointer, :int ],
       :gdImageStringUp                    => [ :void,     :pointer, :pointer, :int, :int, :pointer, :int ],
-      :gdImageStringFTEx                  => [ :pointer,  :pointer, :pointer, :int, :pointer, :double, :double, :int, :int, :pointer, :pointer ],
-      :gdImageStringFTCircle              => [ :pointer,  :pointer, :int, :int, :double, :double, :double, :pointer, :double, :pointer, :pointer, :int ],
+      :gdImageStringFTEx                  => [ :pointer,  :pointer, :pointer, 
+                                               :int, :pointer, :double, :double,
+                                               :int, :int, :pointer, :pointer ],
+      :gdImageStringFTCircle              => [ :pointer,  :pointer, :int, :int,
+                                               :double, :double, :double, :pointer,
+                                               :double, :pointer, :pointer, :int ],
       :gdFontGetSmall                     => [ :pointer ],
       :gdFontGetLarge                     => [ :pointer ],
       :gdFontGetMediumBold                => [ :pointer ],
@@ -162,6 +166,7 @@ module GD2
       :gdImageGetInterpolationMethod      => [ :int,      :pointer],
       
       :gdImageGaussianBlur                => [ :int,      :pointer],
+      :gdImageCopyGaussianBlurred         => [ :pointer,  :pointer, :uint],
     }.each do |fun, ary|
       ret = ary.shift
       attach_function(fun, ary, ret)
