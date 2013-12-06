@@ -668,8 +668,8 @@ module GD2
     end
 
     def blurred(radius)
-      ptr = ::GD2::GD2FFI.gdImageCopyGaussianBlur(image_ptr, radius)
-      raise "gdImageCopyGaussianBlur failed." unless ptr
+      ptr = ::GD2::GD2FFI.gdImageCopyGaussianBlurred(image_ptr, radius)
+      raise "gdImageCopyGaussianBlurred failed." unless ptr
 
       ptr = FFIStruct::ImagePtr.new(ptr)
 

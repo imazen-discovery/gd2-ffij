@@ -166,7 +166,7 @@ module GD2
       :gdImageGetInterpolationMethod      => [ :int,      :pointer],
       
       :gdImageGaussianBlur                => [ :int,      :pointer],
-      :gdImageCopyGaussianBlur            => [ :pointer,  :pointer, :uint],
+      :gdImageCopyGaussianBlurred         => [ :pointer,  :pointer, :uint],
     }.each do |fun, ary|
       ret = ary.shift
       attach_function(fun, ary, ret)
